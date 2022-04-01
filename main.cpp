@@ -16,13 +16,13 @@ video: Chapter 2 - Part 3
  
  1) Write down the names of the 6 major primitive types available in C++  here:
  
- 
- 
- 
- 
- 
- 
- 
+ int     => integer
+ float   => floating point
+ double  => double floating point
+ char    => character
+ bool    => boolean
+ void    => empty/valueless/void/anything that means empty
+ wchar_t => wide character
  
  
 2) for each primitive type, write out 3 variable declarations inside the variableDeclaration() function on line 59.
@@ -64,10 +64,41 @@ void variableDeclarations()
 {
     //example:
     int number = 2; //declaration of a variable named "number", that uses the primitive type 'int', and the variable's initial value is '2'
+    // Do you also accept this formatting? I could rewrite it more conventionally if you prefer.
+    int 
+        num = 1,
+        myInt = 2,
+        thisIsAnInt = 3;
     
+    float
+        myFloat1 = 1.1f,
+        myFloat2 = 2.2f,
+        myFloat3 = 3.3f;
 
+    double
+        myDouble1 = 1, 
+        myDouble2 = 5/2,         // gives 2, the decimals being truncated
+        myDouble3 = 5.0/2; // will give us the expected 2.5
+
+    char
+        myChar1 = 'a',
+        myChar2 = 'b',
+        myChar3 = 'c';
+
+    bool
+        myBool1 = true,
+        myBool2 = false,
+        myBool3 = true;
+    
     
     ignoreUnused(number); //passing each variable declared to the ignoreUnused() function
+    ignoreUnused(
+        num, myInt, thisIsAnInt,          // ints
+        myFloat1, myFloat2, myFloat3,     // floats 
+        myDouble1, myDouble2, myDouble3,  // doubles
+        myChar1, myChar2, myChar3,        // chars
+        myBool1, myBool2, myBool3         // bools
+        );
 }
 
 /*
@@ -84,19 +115,41 @@ bool rentACar(int rentalDuration, int carType = 0)  //function declaration with 
 /*
  1)
  */
-
+int PassIntsToIgnoreUnused(int num1, int num2, int num3)
+{
+    ignoreUnused(num1, num2, num3);
+    return {};
+}
 /*
  2)
  */
-
+float PassAFloatToIgnoreUnused(float myFloat)
+{
+    ignoreUnused(myFloat);
+    return {};
+}
 /*
  3)
  */
-
+void PassThreeIntsAndAFloatToIgnoreUnused(int someInt1, int someInt2, int someInt3, float someFloat)
+{
+    PassIntsToIgnoreUnused(someInt1, someInt2, someInt3);
+    PassAFloatToIgnoreUnused(someFloat);
+}
 /*
  4)
  */
-
+bool CheckIfNum1IsLargerThanNum2AndOtherConditionIsTrue(float num1, float num2, bool someBool)
+{
+    if (num1 > num2 && someBool)
+    {
+        ignoreUnused(num1, num2, someBool);
+        return {}; // Normally, I would write the whole statement in the return statement
+    }
+    // There is no need to put an explict esle, since this part of the code can only be reached if num1 != num2.
+    ignoreUnused(num1, num2);
+    return {};
+}
 /*
  5)
  */
@@ -141,13 +194,13 @@ int main()
     auto carRented = rentACar(6, 2); 
     
     //1)
-    
+    auto function1 = PassIntsToIgnoreUnused(1, 2, 3);
     //2)
-    
+    auto function2 = PassAFloatToIgnoreUnused(2.3f);
     //3)
-    
+    PassThreeIntsAndAFloatToIgnoreUnused(1, 2, 3, 4.4f);
     //4)
-    
+    auto function4 = CheckIfNum1IsLargerThanNum2AndOtherConditionIsTrue(2, 4.0f/2, true);
     //5)
     
     //6)
@@ -162,6 +215,9 @@ int main()
     
     
     ignoreUnused(carRented);
+    ignoreUnused(function1);
+    ignoreUnused(function2);
+    ignoreUnused(function4);
     std::cout << "good to go!" << std::endl;
     return 0;    
 }

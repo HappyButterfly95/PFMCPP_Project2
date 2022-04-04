@@ -76,9 +76,9 @@ void variableDeclarations()
         myFloat3 = 3.3f;
 
     double
-        myDouble1 = 1, 
-        myDouble2 = 5/2,         // gives 2, the decimals being truncated
-        myDouble3 = 5.0/2; // will give us the expected 2.5
+        myDouble1 = (double) 1, // could be time per beat.
+        myDouble2 = 5.73092834798757476439817465873645763476317460,
+        myDouble3 = 1.234567890123456789012345678901234567890;
 
     char
         myChar1 = 'a',
@@ -115,7 +115,7 @@ bool rentACar(int rentalDuration, int carType = 0)  //function declaration with 
 /*
  1)
  */
-int PassIntsToIgnoreUnused(int num1, int num2, int num3)
+int passIntsToIgnoreUnused(int num1, int num2, int num3)
 {
     ignoreUnused(num1, num2, num3);
     return {};
@@ -123,7 +123,7 @@ int PassIntsToIgnoreUnused(int num1, int num2, int num3)
 /*
  2)
  */
-float PassAFloatToIgnoreUnused(float myFloat)
+float passAFloatToIgnoreUnused(float myFloat)
 {
     ignoreUnused(myFloat);
     return {};
@@ -131,15 +131,15 @@ float PassAFloatToIgnoreUnused(float myFloat)
 /*
  3)
  */
-void PassThreeIntsAndAFloatToIgnoreUnused(int someInt1, int someInt2, int someInt3, float someFloat)
+void passThreeIntsAndAFloatToIgnoreUnused(int someInt1, int someInt2, int someInt3, float someFloat)
 {
-    PassIntsToIgnoreUnused(someInt1, someInt2, someInt3);
-    PassAFloatToIgnoreUnused(someFloat);
+    passIntsToIgnoreUnused(someInt1, someInt2, someInt3);
+    passAFloatToIgnoreUnused(someFloat);
 }
 /*
  4)
  */
-bool CheckIfNum1IsLargerThanNum2AndOtherConditionIsTrue(float num1, float num2, bool someBool)
+bool checkIfNum1IsLargerThanNum2AndOtherConditionIsTrue(float num1, float num2, bool someBool)
 {
     if (num1 > num2 && someBool)
     {
@@ -194,13 +194,13 @@ int main()
     auto carRented = rentACar(6, 2); 
     
     //1)
-    auto function1 = PassIntsToIgnoreUnused(1, 2, 3);
+    auto function1 = passIntsToIgnoreUnused(1, 2, 3);
     //2)
-    auto function2 = PassAFloatToIgnoreUnused(2.3f);
+    auto function2 = passAFloatToIgnoreUnused(2.3f);
     //3)
-    PassThreeIntsAndAFloatToIgnoreUnused(1, 2, 3, 4.4f);
+    passThreeIntsAndAFloatToIgnoreUnused(1, 2, 3, 4.4f);
     //4)
-    auto function4 = CheckIfNum1IsLargerThanNum2AndOtherConditionIsTrue(2, 4.0f/2, true);
+    auto function4 = checkIfNum1IsLargerThanNum2AndOtherConditionIsTrue(2, 4.0f/2, true);
     //5)
     
     //6)
